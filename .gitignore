@@ -1,8 +1,10 @@
+# WinAPI ignores
 .vs/
 Debug/
 Release/
 WinApi.vcxproj.user
 
+# Qt ignores
 build/
 *.pro.user
 Makefile*
