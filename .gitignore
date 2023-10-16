@@ -2,3 +2,10 @@
 Debug/
 Release/
 WinApi.vcxproj.user
+
+build/
+*.pro.user
+Makefile*
+*.o
+*.a
+*.so
