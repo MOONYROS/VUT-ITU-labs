@@ -1,0 +1,42 @@
+body {
+    background-color: #313338;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+    margin: 20px;
+    color: #f2f3f4;
+}
+
+p b {
+    color: #f0c808;
+}
+
+p i {
+    color: grey;
+}
+
+body > * {
+    margin: auto;
+    align-items: center;
+    width: 80%;
+    border-radius: 10px;
+    border: 3px solid #525355;
+    background-color: #393d47;
+    transition: ease 150ms;
+    margin: 50px;
+}
+
+body > *:hover {
+    border-color: #24c5c4;
+    transition: ease 150ms;
+}
+
+#chatArea {
+    height: 600px;
+    overflow:auto;
+}
+
+#status {
+    height: 30px;
+}

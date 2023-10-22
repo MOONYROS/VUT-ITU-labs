@@ -2,13 +2,14 @@
 <html><head>
   <title> ITU ajax </title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="style.css">
   <style type="text/css">
-  div, input { margin: 10px; }
+    div, input { margin: 10px; }
   </style>
 </head>
 <body>
 
-<div id="chatArea" style="height: 300px; border: solid #aaa 1px; overflow:auto;"></div> 
+<div id="chatArea"></div>  <!-- style="height: 300px; border: solid #aaa 1px; overflow:auto;" -->
 
 <form onsubmit="return uploadData()">
   <input type="text" id="loginString">
@@ -16,7 +17,7 @@
   <input type="submit" value="send">
 </form>
 
-<div id="status" style="border: solid #aaa 1px; ">&nbsp;</div> 
+<div id="status">&nbsp;</div> 
 
 
 <script type="text/javascript">
