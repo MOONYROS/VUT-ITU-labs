@@ -1,11 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html><head>
-  <title> ITU ajax </title>
+  <title>♿ ITU ajax</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" href="style.css">
-  <style type="text/css">
-    div, input { margin: 10px; }
-  </style>
 </head>
 <body>
 
@@ -100,11 +97,9 @@ function downloadData() {
             if (request.status == 200) {
                 var messages = JSON.parse(request.responseText);
 
-                // Nyní máme pole zpráv (předpokládejme, že každá zpráva je objekt s vlastností 'text')
                 updateChatArea(messages);
             }
             else {
-                // Zde se zobrazí, pokud dojde k chybě během požadavku
                 console.error("Error while downloading data.");
             }
 
@@ -117,11 +112,11 @@ function downloadData() {
 function updateChatArea(messages) {
     var content = "";
     for (var i = 0; i < messages.length; i++) {
-        // Získání textu zprávy z vlastnosti 'cnt' místo 'text'
+        // Getting message text from cnt
         content += "<p><b>" + messages[i].login + ":</b> " + messages[i].cnt + " <i>(" + messages[i].dts + ")</i></p>";
     }
     var chatArea = document.getElementById("chatArea");
-    chatArea.innerHTML = content; // Aktualizujeme obsah chatovacího okna
+    chatArea.innerHTML = content;
 }
 
 setInterval(downloadData, 3000);
