@@ -72,7 +72,7 @@ function uploadData()
                     document.getElementById("newMessageString").value = "";
                 }
                 else {
-                    alert("ERROR WHILE SENDING MESSAGE!");
+                    alert("Error while sending message. Status: " + request.status);
                 }
             }
         }
