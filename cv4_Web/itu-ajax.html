@@ -108,15 +108,42 @@ function downloadData() {
 }
 
 //// put your code here
+// Můžete použít pole, ale množina (Set) zabrání duplicitám automaticky.
+var processedMessagesIds = new Set();
+
 function updateChatArea(messages) {
-    var content = "";
+    var newMessages = [];
+    var latestMessageId = null;
+
     for (var i = 0; i < messages.length; i++) {
-        // Getting message text from cnt
-        content += "<p><b>" + messages[i].login + ":</b> " + messages[i].cnt + " <i>(" + messages[i].dts + ")</i></p>";
+        var msg = messages[i];
+        if (!processedMessagesIds.has(msg.id)) {
+            processedMessagesIds.add(msg.id);
+
+            // Sestavte HTML pro novou zprávu.
+            var newMessage = "<p><b>" + msg.login + ":</b> " + msg.cnt + " <i>(" + msg.dts + ")</i></p>";
+            newMessages.push(newMessage);
+
+            // Aktualizujte nejvyšší ID zprávy.
+            if (latestMessageId === null || msg.id > latestMessageId) {
+                latestMessageId = msg.id;
+            }
+        }
     }
-    var chatArea = document.getElementById("chatArea");
-    chatArea.innerHTML = content;
+
+    // Pokud existují nové zprávy, přidejte je do chatovacího okna.
+    if (newMessages.length > 0) {
+        var chatArea = document.getElementById("chatArea");
+        for (var newMsg of newMessages) {
+            // Tato část kódu přidá nové zprávy bez překreslení celé oblasti.
+            chatArea.innerHTML += newMsg;
+        }
+
+        // Aktualizujte stavový řádek s ID nejnovější zprávy.
+        document.getElementById("status").innerHTML = "Loaded new messages up to ID: " + latestMessageId;
+    }
 }
+
 
 setInterval(downloadData, 3000);
 
