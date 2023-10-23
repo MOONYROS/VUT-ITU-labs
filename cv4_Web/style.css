@@ -37,7 +37,7 @@ body > *:hover {
     transition: ease 150ms;
 }
 
-input[type=text] {
+input[type="text"] {
     background-color: #393d47;
     border: 3px solid #525355;
     color: #f2f3f4;
@@ -47,7 +47,7 @@ input[type=text] {
     height: 20px;
 }
 
-input[type=text]:hover {
+input[type="text"]:hover {
     border: 3px solid #24c5c4;
     transition: ease 150ms;
 }
@@ -56,7 +56,7 @@ input[type=text]:hover {
     width: 500px;
 }
 
-input[type=submit] {
+input[type="submit"] {
     height: 30px;
     width: 60px;
     background-color: #1da1a0;
@@ -66,19 +66,19 @@ input[type=submit] {
     transition: ease 150ms;
 }
 
-input[type=submit]:hover {
+input[type="submit"]:hover {
     background-color: #24c5c4;
     border: 3px solid #24c5c4;
 }
 
-input[type=submit]:active {
+input[type="submit"]:active {
     background-color: #f2f3f4;
     border: 3px solid #f2f3f4;
 }
 
 #chatArea {
-    height: 600px;
-    overflow:auto;
+    height: 400px;
+    overflow: auto;
 }
 
 #status {
