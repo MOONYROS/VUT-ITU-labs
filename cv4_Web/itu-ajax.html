@@ -1,152 +1,163 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html><head>
-  <title>♿ ITU ajax</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<html>
+    <head>
+        <title>♿ ITU ajax</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="chatArea"></div>
+        <!-- style="height: 300px; border: solid #aaa 1px; overflow:auto;" -->
 
-<div id="chatArea"></div>  <!-- style="height: 300px; border: solid #aaa 1px; overflow:auto;" -->
+        <form onsubmit="return uploadData()">
+            <input type="text" id="loginString" placeholder="login" />
+            <input type="text" id="newMessageString" placeholder="message" />
+            <input type="submit" value="send" />
+        </form>
 
-<form onsubmit="return uploadData()">
-  <input type="text" id="loginString" placeholder="login">
-  <input type="text" id="newMessageString" placeholder="message">
-  <input type="submit" value="send">
-</form>
+        <div id="status">&nbsp;</div>
 
-<div id="status">&nbsp;</div> 
+        <script type="text/javascript">
+            /***
+             * XMLHttpRequest object constructor (for compatibility with various browsers)
+             */
+            function createXmlHttpRequestObject() {
+                var request;
 
-
-<script type="text/javascript">
-
-/***
-  * XMLHttpRequest object constructor (for compatibility with various browsers)
-  */
-function createXmlHttpRequestObject() 
-{
-    var request;
-  
-    try
-    {
-        request = new XMLHttpRequest(); // should work on all browsers except IE6 or older
-    } 
-    catch (e) 
-    { 
-        try 
-        {
-            request = new ActiveXObject("Microsoft.XMLHttp"); // browser is IE6 or older
-        }
-        catch (e) 
-        {
-            // ignore error
-        }
-    }
-  
-    if (!request) 
-    {
-        alert("Error creating the XMLHttpRequest object.");
-    } 
-    else 
-    {
-        return request;
-    }
-}
-
-function uploadData()
-{
-    document.getElementById("status").innerHTML = "uploadData()";
-
-    try 
-    {
-        var request = createXmlHttpRequestObject(); // stores XMLHttpRequestObject
-        //// put your code here
-        var login = encodeURIComponent(document.getElementById("loginString").value);
-        var message = encodeURIComponent(document.getElementById("newMessageString").value);
-
-        request.open("POST", "https://pckiss.fit.vutbr.cz/itu/api.php", true);
-
-        request.onreadystatechange = function() {
-            if (request.readyState == 4) {
-                if (request.status == 200) {
-                    downloadData();
-                    document.getElementById("newMessageString").value = "";
+                try {
+                    request = new XMLHttpRequest(); // should work on all browsers except IE6 or older
+                } catch (e) {
+                    try {
+                        request = new ActiveXObject("Microsoft.XMLHttp"); // browser is IE6 or older
+                    } catch (e) {
+                        // ignore error
+                    }
                 }
-                else {
-                    alert("Error while sending message. Status: " + request.status);
+
+                if (!request) {
+                    alert("Error creating the XMLHttpRequest object.");
+                } else {
+                    return request;
                 }
             }
-        }
 
-        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.send("user=" + login + "&data=" + message);
-    } 
-    catch (e) 
-    {
-        alert(e.toString());
-    }
+            function uploadData() {
+                document.getElementById("status").innerHTML = "uploadData()";
 
-    return false; // to avoid default form submit behavior 
-}
+                try {
+                    var request = createXmlHttpRequestObject(); // stores XMLHttpRequestObject
+                    //// put your code here
+                    var login = encodeURIComponent(
+                        document.getElementById("loginString").value
+                    );
+                    var message = encodeURIComponent(
+                        document.getElementById("newMessageString").value
+                    );
 
-function downloadData() {
-    var request = createXmlHttpRequestObject();
-    //// put your code here
-    request.open('GET', 'https://pckiss.fit.vutbr.cz/itu/api.php', true);
-    request.onreadystatechange = function() {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var messages = JSON.parse(request.responseText);
+                    request.open(
+                        "POST",
+                        "https://pckiss.fit.vutbr.cz/itu/api.php",
+                        true
+                    );
 
-                updateChatArea(messages);
+                    request.onreadystatechange = function () {
+                        if (request.readyState == 4) {
+                            if (request.status == 200) {
+                                downloadData();
+                                document.getElementById(
+                                    "newMessageString"
+                                ).value = "";
+                            } else {
+                                alert(
+                                    "Error while sending message. Status: " +
+                                        request.status
+                                );
+                            }
+                        }
+                    };
+
+                    request.setRequestHeader(
+                        "Content-Type",
+                        "application/x-www-form-urlencoded"
+                    );
+                    request.send("user=" + login + "&data=" + message);
+                } catch (e) {
+                    alert(e.toString());
+                }
+
+                return false; // to avoid default form submit behavior
             }
-            else {
-                console.error("Error while downloading data.");
+
+            function downloadData() {
+                var request = createXmlHttpRequestObject();
+                //// put your code here
+                request.open(
+                    "GET",
+                    "https://pckiss.fit.vutbr.cz/itu/api.php",
+                    true
+                );
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4) {
+                        if (request.status == 200) {
+                            var messages = JSON.parse(request.responseText);
+
+                            updateChatArea(messages);
+                        } else {
+                            console.error("Error while downloading data.");
+                        }
+                    }
+                };
+                request.send(null); // Sending get request
             }
-        }
-    }
-    request.send(null); // Odesílání GET požadavku
-}
 
-//// put your code here
-// Můžete použít pole, ale množina (Set) zabrání duplicitám automaticky.
-var processedMessagesIds = new Set();
+            //// put your code here
+            // Set prevents duplications
+            var processedMessagesIds = new Set();
 
-function updateChatArea(messages) {
-    var newMessages = [];
-    var latestMessageId = null;
+            function updateChatArea(messages) {
+                var newMessages = [];
+                var latestMessageId = null;
 
-    for (var i = 0; i < messages.length; i++) {
-        var msg = messages[i];
-        if (!processedMessagesIds.has(msg.id)) {
-            processedMessagesIds.add(msg.id);
+                for (var i = 0; i < messages.length; i++) {
+                    var msg = messages[i];
+                    if (!processedMessagesIds.has(msg.id)) {
+                        processedMessagesIds.add(msg.id);
 
-            // Sestavte HTML pro novou zprávu.
-            var newMessage = "<p><b>" + msg.login + ":</b> " + msg.cnt + " <i>(" + msg.dts + ")</i></p>";
-            newMessages.push(newMessage);
+                        // new message HTML code
+                        var newMessage =
+                            "<p><b>" +
+                            msg.login +
+                            ":</b> " +
+                            msg.cnt +
+                            " <i>(" +
+                            msg.dts +
+                            ")</i></p>";
+                        newMessages.push(newMessage);
 
-            // Aktualizujte nejvyšší ID zprávy.
-            if (latestMessageId === null || msg.id > latestMessageId) {
-                latestMessageId = msg.id;
+                        // Updating latest message id
+                        if (
+                            latestMessageId === null ||
+                            msg.id > latestMessageId
+                        ) {
+                            latestMessageId = msg.id;
+                        }
+                    }
+                }
+
+                // adding new messages to chatArea if any new exist.
+                if (newMessages.length > 0) {
+                    var chatArea = document.getElementById("chatArea");
+                    for (var newMsg of newMessages) {
+                        chatArea.innerHTML += newMsg;
+                    }
+
+                    // refreshing latest ID in status div
+                    document.getElementById("status").innerHTML =
+                        "Loaded new messages up to ID: " + latestMessageId;
+                }
             }
-        }
-    }
 
-    // Pokud existují nové zprávy, přidejte je do chatovacího okna.
-    if (newMessages.length > 0) {
-        var chatArea = document.getElementById("chatArea");
-        for (var newMsg of newMessages) {
-            // Tato část kódu přidá nové zprávy bez překreslení celé oblasti.
-            chatArea.innerHTML += newMsg;
-        }
-
-        // Aktualizujte stavový řádek s ID nejnovější zprávy.
-        document.getElementById("status").innerHTML = "Loaded new messages up to ID: " + latestMessageId;
-    }
-}
-
-
-setInterval(downloadData, 3000);
-
-</script>
-
-</body></html>
+            setInterval(downloadData, 3000);
+        </script>
+    </body>
+</html>
