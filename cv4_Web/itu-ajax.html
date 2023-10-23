@@ -111,7 +111,7 @@
             }
 
             //// put your code here
-            // Můžete použít pole, ale množina (Set) zabrání duplicitám automaticky.
+            // Set prevents duplications
             var processedMessagesIds = new Set();
 
             function updateChatArea(messages) {
@@ -123,7 +123,7 @@
                     if (!processedMessagesIds.has(msg.id)) {
                         processedMessagesIds.add(msg.id);
 
-                        // Sestavte HTML pro novou zprávu.
+                        // new message HTML code
                         var newMessage =
                             "<p><b>" +
                             msg.login +
@@ -134,7 +134,7 @@
                             ")</i></p>";
                         newMessages.push(newMessage);
 
-                        // Aktualizujte nejvyšší ID zprávy.
+                        // Updating latest message id
                         if (
                             latestMessageId === null ||
                             msg.id > latestMessageId
@@ -148,11 +148,10 @@
                 if (newMessages.length > 0) {
                     var chatArea = document.getElementById("chatArea");
                     for (var newMsg of newMessages) {
-                        // Tato část kódu přidá nové zprávy bez překreslení celé oblasti.
                         chatArea.innerHTML += newMsg;
                     }
 
-                    // Aktualizujte stavový řádek s ID nejnovější zprávy.
+                    // refreshing latest ID in status div
                     document.getElementById("status").innerHTML =
                         "Loaded new messages up to ID: " + latestMessageId;
                 }
