@@ -8,10 +8,201 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     x:Class="WPFWeather.App.Windows.MainWindow"
     mc:Ignorable="d"
-    Title="WPF Weather Demo" Height="312" Width="500"
+    Title="WPF Weather Demo" Height="350" Width="300"
     d:DataContext="{d:DesignInstance {x:Type viewModels:WeatherViewModel}}">
 
     <Window.Resources>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
     </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="112" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <!-- ROW 1 -->
+        <StackPanel Visibility="{Binding DownloadingWeather, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}"
+                    HorizontalAlignment="Center"
+                    Height="112"
+                    Orientation="Vertical"
+                    Grid.Row="0">
+
+            <Image Source="{Binding Weather.Icon}" 
+                   Height="80"
+                   Width="80"/>
+
+            <TextBlock Visibility="{Binding DownloadingWeather, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}"
+                       Text="{Binding Weather.Description}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"/>
+
+        </StackPanel>
+
+        <!-- ROW 2 -->
+        <StackPanel Visibility="{Binding DownloadingWeather, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}"
+                    HorizontalAlignment="Center"
+                    Height="50"
+                    Orientation="Horizontal"
+                    Grid.Row="1">
+
+            <Polygon
+                Width="30"
+                Height="30"
+                Fill="Black"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+                <Polygon.LayoutTransform>
+                    <RotateTransform Angle="{Binding Weather.WindDirection}" />
+                </Polygon.LayoutTransform>
+
+                <Polygon.Points>
+                    <Point X="15" Y="0" />
+                    <Point X="10" Y="30" />
+                    <Point X="15" Y="25" />
+                    <Point X="20" Y="30" />
+                </Polygon.Points>
+
+            </Polygon>
+
+            <TextBlock Text="{Binding Weather.WindSpeed, StringFormat={}{0} m/s}"
+                       FontSize="28"
+                       Height="40"
+                       Width="120"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+
+        </StackPanel>
+
+        <!-- ROW 3 -->
+        <StackPanel Visibility="{Binding DownloadingWeather, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}"
+                    HorizontalAlignment="Center"
+                    Height="50"
+                    Orientation="Vertical"
+                    Grid.Row="2">
+
+            <StackPanel Height="15"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+
+                <TextBlock Text="Temperature:"
+                           FontSize="12"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="100" />
+
+                <TextBlock Text="Humidity:"
+                           FontSize="12"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="100" />
+
+            </StackPanel>
+
+            <StackPanel Height="35"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+
+                <TextBlock Text="{Binding Weather.Temperature, StringFormat={}{0:0}°C}"
+                           FontSize="28"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="100" />
+
+                <TextBlock Text="{Binding Weather.Humidity, StringFormat={}{0:0}%}"
+                           FontSize="28"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="100" />
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- ROW 4 -->
+        <StackPanel Visibility="{Binding DownloadingWeather, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}"
+                    HorizontalAlignment="Center"
+                    Height="50"
+                    Orientation="Vertical"
+                    Grid.Row="3">
+
+            <StackPanel Height="15"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+
+                <TextBlock Text="Sunrise:"
+                           FontSize="12"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="150" />
+
+                <TextBlock Text="Sunset:"
+                           FontSize="12"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="150" />
+
+            </StackPanel>
+
+            <StackPanel Height="35"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+
+                <TextBlock Text="{Binding Weather.Sunrise.TimeOfDay}"
+                           FontSize="28"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="150"/>
+
+                <TextBlock Text="{Binding Weather.Sunset.TimeOfDay}"
+                           FontSize="28"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Width="150"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- ROW 5 -->
+        <StackPanel Height="30"
+                    Grid.Row="4"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+
+            <Button Command="{Binding DownloadWeatherCommand}"
+                    CommandParameter="Brno"
+                    Content="Brno"
+                    Width="50"
+                    Height="30" />
+            <Button Command="{Binding DownloadWeatherCommand}"
+                    CommandParameter="London"
+                    Content="London"
+                    Width="50"
+                    Height="30" />
+            <Button Command="{Binding DownloadWeatherCommand}"
+                    CommandParameter="Praha"
+                    Content="Praha"
+                    Width="50"
+                    Height="30" />
+
+        </StackPanel>
+
+        <!-- ALONE STANDING LOADING TEXT -->
+        <TextBlock Visibility="{Binding DownloadingWeather, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=False}" 
+                   Text="Loading Weather..."
+                   FontWeight="Bold"
+                   Grid.Row="4"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center" />
+
+    </Grid>
+    
 </Window>

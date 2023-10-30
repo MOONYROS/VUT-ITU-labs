@@ -3,6 +3,7 @@
 Debug/
 Release/
 WinApi.vcxproj.user
+obj/
 
 # Qt ignores
 build/

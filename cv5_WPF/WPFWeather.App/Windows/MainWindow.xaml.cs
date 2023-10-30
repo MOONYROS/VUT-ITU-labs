@@ -9,6 +9,10 @@ namespace WPFWeather.App.Windows
         public MainWindow()
         {
             InitializeComponent();
+
+            WeatherViewModel weather_vm = new WeatherViewModel(new WeatherDiskService());
+            weather_vm.DownloadWeatherCommand.Execute("Brno");
+            DataContext = weather_vm;
         }
     }
 }
