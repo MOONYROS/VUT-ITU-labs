@@ -11,4 +11,4 @@ This repository is made for people who sometimes tend to get stuck and don't wan
 - Lab 2 (Figma): 5/5
 - Lab 3 (Qt): 5/5
 - Lab 4 (Web AJAX): 5/5
-- Lab 5 (WPF): TBD
+- Lab 5 (WPF): 5/5
